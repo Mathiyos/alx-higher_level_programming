@@ -1,17 +1,21 @@
 #!/usr/bin/python3
+"""Pascal_triangle"""
 
 
-class Student:
+def pascal_triangle(n):
+    """Returns the pascal triangle of n"""
 
-    def __init__(self, first_name, last_name, age):
+    if n <= 0:
+        return []
 
-        self.first_name = first_name
-        self.last_name = last_name
-        self.age = age
+    l = [[0 for x in range(i + 1)] for i in range(n)]
+    l[0] = [1]
 
-    def to_json(self, attrs=None):
-
-        if(type(attrs) == list and all(type(element) == str
-                                       for element in attrs)):
-            return {i: getattr(self, i) for i in attrs if hasattr(self, i)}
-        return self.__dict__
+    for i in range(1, n):
+        l[i][0] = 1
+        for j in range(1, i + 1):
+            if j < len(l[i - 1]):
+                l[i][j] = l[i - 1][j - 1] + l[i - 1][j]
+            else:
+                l[i][j] = l[i - 1][0]
+    return l
